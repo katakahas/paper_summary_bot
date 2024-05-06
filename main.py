@@ -1,8 +1,8 @@
+import os
 import random
 from re import compile
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
-import os
 
 app_token = os.environ["SLACK_APP_TOKEN"]
 bot_token = os.environ["SLACK_BOT_TOKEN"]
