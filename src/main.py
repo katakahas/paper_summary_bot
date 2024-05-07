@@ -19,9 +19,15 @@ def test_function(body):
     print("test command is accepted")
 
 @app.event("message")
-def handle_message_events(body, logger):
-    print("invalid message")
-    logger.info(body)
+def handle_message_events(body):
+    main_event = body["event"]
+    text_block = main_event["blocks"]
+    text_elements = text_block[0]["elements"][0]["elements"]
+    
+    for element in text_elements:
+        if element["type"]=="link":
+            url = element["url"]
+            print("get url: "+url)
 
 if __name__ == "__main__":
     handler = SocketModeHandler(app, app_token)
