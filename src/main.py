@@ -8,24 +8,25 @@ bot_token = os.environ["SLACK_BOT_TOKEN"]
 
 app = App(token=bot_token)
 
-@app.message(compile("^私の名前は.+"))
-def listener(body):
+@app.message(compile("test"))
+def test_function(body):
     main_event = body["event"]
     text = main_event["text"]
     channel = main_event["channel"]
     
-    print(f"Text message: {text}")
-    app.client.chat_postMessage(text="google pixelを使っています", channel=channel)
+    app.client.chat_postMessage(text="test message", channel=channel)
+    print("test command is accepted")
 
 @app.event("message")
-def handle_message_events(body, logger):
-    print("invalid message")
-    logger.info(body)
+def handle_message_events(body):
+    main_event = body["event"]
+    text_block = main_event["blocks"]
+    text_elements = text_block[0]["elements"][0]["elements"]
     
-@app.event("message.im")
-def direct_message(body):
-    print(body)
-    print("direct messaged")
+    for element in text_elements:
+        if element["type"]=="link":
+            url = element["url"]
+            print("get url: "+url)
 
 if __name__ == "__main__":
     handler = SocketModeHandler(app, app_token)
