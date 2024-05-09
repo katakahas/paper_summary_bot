@@ -8,6 +8,7 @@
 
 # What to Do
 * urlをchatGPTに投げて反応を得る
+  * semantic scholarから、引用数、査読済みなどの情報を取ってくる 
 * みんなが興味がありそうな論文を定期的にレコメンドする
 
 # Libraries
