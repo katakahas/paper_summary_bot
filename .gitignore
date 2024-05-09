@@ -1,5 +1,5 @@
 # files to ignore
-*
+## nothing to ignore so far
 
 # except for these
 !.gitignore
@@ -7,3 +7,4 @@
 !README.md
 !requirements.txt
 !environment.yml
+!.pre-commit-config.yml
