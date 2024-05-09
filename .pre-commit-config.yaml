@@ -18,4 +18,4 @@ repos:
         entry: isort
         language: system
         types: [python]
-        args: [--profile, black]
+        args: ["--profile", "black"]
