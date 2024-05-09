@@ -1,0 +1,9 @@
+# files to ignore
+*
+
+# except for these
+!.gitignore
+!/src/
+!README.md
+!requirements.txt
+!environment.yml
