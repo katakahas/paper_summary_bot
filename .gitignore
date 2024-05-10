@@ -1,10 +1,10 @@
 # files to ignore
-## nothing to ignore so far
+/.venv/
+.python-version
 
 # except for these
 !.gitignore
-!/src/
+!/src/*.py
 !README.md
 !requirements.txt
-!environment.yml
-!.pre-commit-config.yml
+!.pre-commit-config.yaml
