@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "paper-summary-bot"
+version = "0.1.0"
+description = "Summarize papers sent via slack"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "3.10.11"
+openai = "^1.28.0"
+slack-bolt = "^1.18.1"
+slack-sdk = "^3.27.1"
+
+
+[tool.poetry.group.dev.dependencies]
+openai = "^1.28.0"
+slack-bolt = "^1.18.1"
+slack-sdk = "^3.27.1"
+pre-commit = "^3.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
