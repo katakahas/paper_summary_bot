@@ -4,6 +4,7 @@ from re import compile
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
+import gpt_read
 import semantic_utils
 
 # from gpt_read import summarize_paper_in_url
@@ -41,10 +42,13 @@ def handle_message_events(body):
             print("got url: " + url)
 
     if url != "":
-        title, tldr, abstract = semantic_utils.title_tldr_and_abstract(url)
-        message = "タイトル: " + title + "\n"
-        message += "TL;DR: " + tldr + "\n"
-        message += "概要: " + abstract
+        print("start translation")
+        data_en = semantic_utils.title_tldr_and_abstract(url)
+        # title_en = info_en[0]
+        title_ja, tldr_ja, abstract_ja = gpt_read.translate_title_tldr_abs(*data_en)
+        message = "タイトル: " + title_ja + "\n"
+        message += "TL;DR: " + tldr_ja + "\n"
+        message += "概要: " + abstract_ja
         app.client.chat_postMessage(text=message, channel=channel)
 
 
