@@ -61,13 +61,6 @@ def handle_message_events(body):
         for item in data_en["authors"]:
             authors += item["name"] + ", "
         authors = authors[:-2]
-        additional_info = "*Authors*: " + authors
-        if venue is not None:
-            additional_info += "\n*Venue*: " + venue
-        if year is not None:
-            additional_info += ", " + str(year)
-        if cites is not None:
-            additional_info += "\n*Cited by*: " + str(cites)
 
         # post message
         app.client.chat_postMessage(
