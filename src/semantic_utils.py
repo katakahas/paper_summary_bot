@@ -7,7 +7,7 @@ endpoint = "https://api.semanticscholar.org/graph/v1/paper/"
 params = {"fields": "title,tldr,abstract,authors"}
 
 
-def paper_informations(arxiv_url, item=params):
+def paper_informations(arxiv_url, item=params, tries=20, interval=3):
     """
     take paper informations about arxiv_url
     If you cannot take information within 60 seconds, raise TimeoutError
@@ -26,9 +26,9 @@ def paper_informations(arxiv_url, item=params):
 
     # request some times until take information
     while result.status_code != 200:
-        if request_time > 20:
+        if request_time > tries:
             raise TimeoutError("cannot connect to semantic scholar")
-        time.sleep(3)
+        time.sleep(interval)
         print(str(request_time) + " request failed")
 
         result = requests.get(endpoint + "ARXIV:" + arxiv_id, params=params)

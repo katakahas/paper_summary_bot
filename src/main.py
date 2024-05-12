@@ -39,9 +39,12 @@ def handle_message_events(body):
             url = element["url"]
             print("got url: " + url)
 
-    if url != "":
+    # process arXiv url
+    if url != "" and url.split("/")[2] == "arxiv.org":
         print("start translation")
-        data_en = semantic_utils.paper_informations(url)
+        data_en = semantic_utils.paper_informations(
+            url, item={"fields": "title,tldr,abstract,authors,venue,year,citationCount"}
+        )
         # title_en = info_en[0]
         title_tldr_abs_en = data_en["title"], data_en["tldr"]["text"], data_en["abstract"]
         title_ja, tldr_ja, abstract_ja = gpt_read.translate_title_tldr_abs(*title_tldr_abs_en)
@@ -49,13 +52,36 @@ def handle_message_events(body):
         message += "*TL;DR*: " + tldr_ja + "\n"
         message += "*概要*: " + abstract_ja
 
+        year = data_en["year"]
+        venue = data_en["venue"]
+        cites = data_en["citationCount"]
         authors = ""
         for item in data_en["authors"]:
             authors += item["name"] + ", "
         authors = authors[:-2]
+        additional_info = "*Authors*: " + authors
+        if venue is not None:
+            additional_info += "\n*Venue*: " + venue
+        if year is not None:
+            additional_info += ", " + str(year)
+        if cites is not None:
+            additional_info += "\n*Cited by*: " + str(cites)
 
         app.client.chat_postMessage(
-            attachments=[{"pretext": "", "text": "*Authors*: " + authors}], text=message, channel=channel
+            blocks=[
+                {"type": "header", "text": {"type": "plain_text", "text": data_en["title"]}},
+                {
+                    "type": "context",
+                    "elements": [
+                        {"type": "mrkdwn", "text": "*Author*: " + authors},
+                        {"type": "mrkdwn", "text": "*Venue*: " + venue + " " + str(year)},
+                        {"type": "mrkdwn", "text": "*Cited by*: " + str(cites)},
+                    ],
+                },
+                {"type": "section", "text": {"text": message, "type": "mrkdwn"}},
+            ],
+            text=message,
+            channel=channel,
         )
 
 
