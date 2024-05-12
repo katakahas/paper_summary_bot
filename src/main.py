@@ -47,6 +47,7 @@ def handle_message_events(body):
         )
         # title_en = info_en[0]
         title_tldr_abs_en = data_en["title"], data_en["tldr"]["text"], data_en["abstract"]
+        # title_ja, tldr_ja, abstract_ja = title_tldr_abs_en
         title_ja, tldr_ja, abstract_ja = gpt_read.translate_title_tldr_abs(*title_tldr_abs_en)
         message = "*タイトル*: " + title_ja + "\n"
         message += "*TL;DR*: " + tldr_ja + "\n"
