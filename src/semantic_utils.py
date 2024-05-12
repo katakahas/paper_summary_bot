@@ -28,9 +28,9 @@ def paper_informations(arxiv_url, item=params, tries=20, interval=3):
     while result.status_code != 200:
         if request_time > tries:
             raise TimeoutError("cannot connect to semantic scholar")
-        time.sleep(interval)
-        print(str(request_time) + " request failed")
 
+        print(str(request_time + 1) + "th request for Semantic Scholar is failed. Bot will re-request soon.")
+        time.sleep(interval)
         result = requests.get(endpoint + "ARXIV:" + arxiv_id, params=params)
         request_time += 1
 

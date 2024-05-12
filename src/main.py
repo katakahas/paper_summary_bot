@@ -64,14 +64,15 @@ def handle_message_events(body):
 
         # post message
         app.client.chat_postMessage(
+            attachments=[{"pretext": "", "text": "source: " + url}],
             blocks=[
                 {"type": "header", "text": {"type": "plain_text", "text": data_en["title"]}},
                 {
                     "type": "context",
                     "elements": [
-                        {"type": "mrkdwn", "text": "*Author*: " + authors},
-                        {"type": "mrkdwn", "text": "*Venue*: " + venue + " " + str(year)},
-                        {"type": "mrkdwn", "text": "*Cited by*: " + str(cites)},
+                        {"type": "mrkdwn", "text": ":student: *Author*: " + authors},
+                        {"type": "mrkdwn", "text": ":pushpin: *Venue*: " + venue + " " + str(year)},
+                        {"type": "mrkdwn", "text": ":black_nib: *Cited by*: " + str(cites)},
                     ],
                 },
                 {"type": "section", "text": {"text": message, "type": "mrkdwn"}},
