@@ -58,5 +58,4 @@ async def translate_tpl_en_async(*tpl_en: str) -> list[str]:
 
     tasks = [asyncio.create_task(translate_async(en)) for en in tpl_en]
     res = await asyncio.gather(*tasks)
-    res = [r for r in res]
     return ["".join(r) for r in res]
