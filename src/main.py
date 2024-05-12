@@ -80,7 +80,7 @@ def handle_message_events(body):
                         {
                             "type": "rich_text_section",
                             "elements": [
-                                {"type": "text", "text": "論文名: ", "style": {"bold": True}},
+                                {"type": "text", "text": "タイトル: ", "style": {"bold": True}},
                                 {"type": "link", "url": url, "text": title_ja},
                                 {"type": "text", "text": "\nTL;DR: ", "style": {"bold": True}},
                                 {"type": "text", "text": tldr_ja},
