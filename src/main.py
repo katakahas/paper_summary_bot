@@ -64,7 +64,6 @@ def handle_message_events(body):
 
         # post message
         app.client.chat_postMessage(
-            attachments=[{"pretext": "", "text": "source: " + url}],
             blocks=[
                 {"type": "header", "text": {"type": "plain_text", "text": data_en["title"]}},
                 {
@@ -75,7 +74,22 @@ def handle_message_events(body):
                         {"type": "mrkdwn", "text": ":black_nib: *Cited by*: " + str(cites)},
                     ],
                 },
-                {"type": "section", "text": {"text": message, "type": "mrkdwn"}},
+                {
+                    "type": "rich_text",
+                    "elements": [
+                        {
+                            "type": "rich_text_section",
+                            "elements": [
+                                {"type": "text", "text": "論文名: ", "style": {"bold": True}},
+                                {"type": "link", "url": url, "text": title_ja},
+                                {"type": "text", "text": "\nTL;DR: ", "style": {"bold": True}},
+                                {"type": "text", "text": tldr_ja},
+                                {"type": "text", "text": "\n概要: ", "style": {"bold": True}},
+                                {"type": "text", "text": abstract_ja},
+                            ],
+                        }
+                    ],
+                },
             ],
             text=message,
             channel=channel,
