@@ -1,3 +1,4 @@
+import asyncio
 import os
 from re import compile
 
@@ -41,14 +42,14 @@ def handle_message_events(body):
 
     # process arXiv url
     if url != "" and url.split("/")[2] == "arxiv.org":
-        print("start translation")
+        print("URL detected.")
         data_en = semantic_utils.paper_informations(
             url, item={"fields": "title,tldr,abstract,authors,venue,year,citationCount"}
         )
         # title_en = info_en[0]
         title_tldr_abs_en = data_en["title"], data_en["tldr"]["text"], data_en["abstract"]
         # title_ja, tldr_ja, abstract_ja = title_tldr_abs_en
-        title_ja, tldr_ja, abstract_ja = gpt_read.translate_title_tldr_abs(*title_tldr_abs_en)
+        title_ja, tldr_ja, abstract_ja = asyncio.run(gpt_read.translate_tpl_en_async(*title_tldr_abs_en))
         message = "*タイトル*: " + title_ja + "\n"
         message += "*TL;DR*: " + tldr_ja + "\n"
         message += "*概要*: " + abstract_ja
