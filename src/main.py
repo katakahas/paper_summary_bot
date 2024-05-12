@@ -32,7 +32,7 @@ def handle_message_events(body):
     text_elements = text_block[0]["elements"][0]["elements"]
     channel = main_event["channel"]
 
-    # take url
+    # retrieve url
     url = ""
     for element in text_elements:
         if element["type"] == "link":
@@ -53,6 +53,7 @@ def handle_message_events(body):
         message += "*TL;DR*: " + tldr_ja + "\n"
         message += "*概要*: " + abstract_ja
 
+        # get side information
         year = data_en["year"]
         venue = data_en["venue"]
         cites = data_en["citationCount"]
@@ -68,6 +69,7 @@ def handle_message_events(body):
         if cites is not None:
             additional_info += "\n*Cited by*: " + str(cites)
 
+        # post message
         app.client.chat_postMessage(
             blocks=[
                 {"type": "header", "text": {"type": "plain_text", "text": data_en["title"]}},
