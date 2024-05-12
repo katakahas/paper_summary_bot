@@ -1,5 +1,6 @@
 # files to ignore
 /.venv/
+*/__pycache__/
 .python-version
 
 # except for these
