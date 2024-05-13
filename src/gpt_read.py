@@ -1,10 +1,21 @@
 import asyncio
 
-from gpt_utils import call_gpt_async, create_asyncClient, translation_prompt
+from gpt_utils import (
+    call_gpt,
+    call_gpt_async,
+    create_asyncClient,
+    create_client,
+    fulltext_summary_prompt,
+    translation_prompt,
+)
 
 
 def summarize_paper_in_url(url):
-    pass
+    client = create_client()
+    prompt = fulltext_summary_prompt(url)
+    print("start")
+    res, tokens = call_gpt(client, prompt)
+    print(res, tokens)
 
 
 def split_en(en: str) -> list[str]:

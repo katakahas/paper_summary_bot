@@ -95,6 +95,7 @@ def handle_message_events(body):
             text=message,
             channel=channel,
         )
+        gpt_read.summarize_paper_in_url(url)
 
 
 # run app bot
