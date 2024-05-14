@@ -64,7 +64,7 @@ def handle_message_events(body):
         authors = authors[:-2]
 
         # post message
-        app.client.chat_postMessage(
+        semantic = app.client.chat_postMessage(
             blocks=[
                 {"type": "header", "text": {"type": "plain_text", "text": data_en["title"]}},
                 {
@@ -95,7 +95,13 @@ def handle_message_events(body):
             text=message,
             channel=channel,
         )
-        gpt_read.summarize_paper_in_url(url)
+        summary = gpt_read.summarize_paper_in_url(url)
+        app.client.chat_postMessage(
+            text=summary,
+            channel=channel,
+            thread_ts=semantic["message"]["ts"],
+            blocks=[{"type": "section", "text": {"type": "mrkdwn", "text": summary}}],
+        )
 
 
 # run app bot

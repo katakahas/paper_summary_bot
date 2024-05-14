@@ -14,7 +14,7 @@
 2. このリポジトリを `git clone` する
 4. `pyenv install 3.10.11` する
 4. `poetry config virtualenvs.in-project true` する
-3. `git clone` してきたディレクトリ(以下、そこでのコマンド)で `poetry install` を叩く
+3. `git clone` してきたディレクトリ(以下、そこでのコマンド)で `pyenv local 3.10.11`, `poetry install` を叩く
 5. `pre-commit install` を叩く
 6. **(最重要)** ↑で作られた `paper_summary_bot/.git/hooks/pre-commit` (ファイル)を↓のように編集する
 
