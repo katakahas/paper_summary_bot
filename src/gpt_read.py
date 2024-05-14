@@ -11,7 +11,7 @@ from gpt_utils import (
 )
 
 
-def summarize_paper_in_url(url):
+def summarize_paper_in_url(url: str) -> str:
     save_path = load_pdf(url)
     client = create_client()
     thread = call_gpt(client, save_path)

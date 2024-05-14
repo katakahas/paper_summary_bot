@@ -46,7 +46,7 @@ async def call_gpt_async(client: AsyncOpenAI, prompt: str) -> tuple[str, int]:
         raise e
 
 
-def call_gpt(client: OpenAI, save_path) -> tuple[str, int]:
+def call_gpt(client: OpenAI, save_path: str):
     try:
         assistant = create_assistant(client, save_path)
         thread = create_thread(client)
@@ -57,7 +57,7 @@ def call_gpt(client: OpenAI, save_path) -> tuple[str, int]:
         raise e
 
 
-def create_assistant(client, save_path):
+def create_assistant(client: OpenAI, save_path: str):
     vector_store = client.beta.vector_stores.create(name="PDFstore")
     file_streams = [open(save_path, "rb")]
     _ = client.beta.vector_stores.file_batches.upload_and_poll(vector_store_id=vector_store.id, files=file_streams)
@@ -71,7 +71,7 @@ def create_assistant(client, save_path):
     return assistant
 
 
-def create_thread(client):
+def create_thread(client: OpenAI):
     thread = client.beta.threads.create(
         messages=[
             {

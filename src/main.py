@@ -63,6 +63,9 @@ def handle_message_events(body):
             authors += item["name"] + ", "
         authors = authors[:-2]
 
+        # get the full-text summary
+        summary = gpt_read.summarize_paper_in_url(url)
+
         # post message
         semantic = app.client.chat_postMessage(
             blocks=[
@@ -95,7 +98,7 @@ def handle_message_events(body):
             text=message,
             channel=channel,
         )
-        summary = gpt_read.summarize_paper_in_url(url)
+
         app.client.chat_postMessage(
             text=summary,
             channel=channel,
