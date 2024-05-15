@@ -55,7 +55,11 @@ def handle_message_events(body):
         message += "*概要*: " + abstract_ja
 
         # get side information
-        year = data_en["year"]
+        year = ""
+        try:
+            year = data_en["year"]
+        except KeyError as e:
+            year = ""
         venue = data_en["venue"]
         cites = data_en["citationCount"]
         authors = ""
@@ -63,8 +67,11 @@ def handle_message_events(body):
             authors += item["name"] + ", "
         authors = authors[:-2]
 
+        # get the full-text summary
+        summary = gpt_read.summarize_paper_in_url(url)
+
         # post message
-        app.client.chat_postMessage(
+        semantic = app.client.chat_postMessage(
             blocks=[
                 {"type": "header", "text": {"type": "plain_text", "text": data_en["title"]}},
                 {
@@ -94,6 +101,13 @@ def handle_message_events(body):
             ],
             text=message,
             channel=channel,
+        )
+
+        app.client.chat_postMessage(
+            text=summary,
+            channel=channel,
+            thread_ts=semantic["message"]["ts"],
+            blocks=[{"type": "section", "text": {"type": "mrkdwn", "text": summary}}],
         )
 
 
