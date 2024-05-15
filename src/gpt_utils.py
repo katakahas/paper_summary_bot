@@ -2,7 +2,6 @@ import os
 
 from openai import AsyncOpenAI, OpenAI
 
-
 def create_client() -> OpenAI:
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY_KUMA"), timeout=10000, max_retries=3)
     return client

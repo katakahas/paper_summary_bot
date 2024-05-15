@@ -55,7 +55,11 @@ def handle_message_events(body):
         message += "*概要*: " + abstract_ja
 
         # get side information
-        year = data_en["year"]
+        year = ""
+        try:
+            year = data_en["year"]
+        except KeyError as e:
+            year = ""
         venue = data_en["venue"]
         cites = data_en["citationCount"]
         authors = ""
