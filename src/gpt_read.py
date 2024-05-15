@@ -17,7 +17,11 @@ def summarize_paper_in_url(url: str) -> str:
     thread = call_gpt(client, save_path)
     thread_messages = client.beta.threads.messages.list(thread.id)
     response = thread_messages.data[0].content[0].text.value
-    response = re.sub("【.*?source】。", "。", response)
+    response = re.sub(r"【.*?source】", "", response)
+    response = re.sub(r"\s+。", "。", response)
+    response = re.sub(r"・\*", "・ *", response)
+    pattern = re.compile(r"[`\-]{3}(.*?)[`\-]{3}", re.DOTALL)
+    response = pattern.findall(response)[0]
     return response
 
 

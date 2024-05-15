@@ -28,7 +28,7 @@ def create_request(prompt):
 
 
 def translation_prompt(en):
-    return f"日本語に翻訳してください:\n{en}"
+    return f"以下の文章を日本語に翻訳した文のみを出力してください:\n{en}"
 
 
 def summarize_pdf(pdf_url):
@@ -76,13 +76,11 @@ def create_thread(client: OpenAI):
         messages=[
             {
                 "role": "user",
-                "content": "与えられた機械学習に関する論文のPDFを読み、この論文のSummary、ProsとCons、技術的な新規性、実験で何を評価したのかを以下のような形式で日本語で述べてください。\
-                            ### Summary:\
-                            ### Pros:\
-                            ### Cons:\
-                            ### 技術的な新規性:\
-                            ### 実験評価:\
-                            ",
+                "content": "与えられた機械学習に関する論文のPDFを読み、この論文のSummary、ProsとCons、技術的な新規性、\
+                実験評価を日本語でまとめた文章をslackのmrkdwn記法で出力してください。slackのmrkdwn記法の一部は以下の通りです:\
+                太字: *`対象のテキスト`* \
+                斜体: _`対象のテキスト`_ \
+                箇条書き: ・`対象のテキスト`",
             }
         ]
     )
