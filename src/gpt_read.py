@@ -1,10 +1,28 @@
 import asyncio
+import re
 
-from gpt_utils import call_gpt_async, create_asyncClient, translation_prompt
+from arxiv_utils import load_pdf
+from gpt_utils import (
+    call_gpt,
+    call_gpt_async,
+    create_asyncClient,
+    create_client,
+    translation_prompt,
+)
 
 
-def summarize_paper_in_url(url):
-    pass
+def summarize_paper_in_url(url: str) -> str:
+    save_path = load_pdf(url)
+    client = create_client()
+    thread = call_gpt(client, save_path)
+    thread_messages = client.beta.threads.messages.list(thread.id)
+    response = thread_messages.data[0].content[0].text.value
+    response = re.sub(r"【.*?source】", "", response)
+    response = re.sub(r"\s+。", "。", response)
+    response = re.sub(r"・\*", "・ *", response)
+    pattern = re.compile(r"[`\-]{3}(.*?)[`\-]{3}", re.DOTALL)
+    response = pattern.findall(response)[0]
+    return response
 
 
 def split_en(en: str) -> list[str]:
