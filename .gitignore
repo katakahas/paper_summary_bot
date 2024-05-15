@@ -2,7 +2,7 @@
 /.venv/
 */__pycache__/
 .python-version
-paper.pdf
+**/pdfs/**
 
 # except for these
 !.gitignore
