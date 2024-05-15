@@ -8,8 +8,8 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 import gpt_read
 import semantic_utils
 
-app_token = os.getenv("SLACK_APP_TOKEN_TEST")
-bot_token = os.getenv("SLACK_BOT_TOKEN_TEST")
+app_token = os.getenv("SLACK_APP_TOKEN")
+bot_token = os.getenv("SLACK_BOT_TOKEN")
 
 app = App(token=bot_token)
 
