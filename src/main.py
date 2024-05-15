@@ -8,14 +8,14 @@ from slack_bolt.adapter.socket_mode import SocketModeHandler
 import gpt_read
 import semantic_utils
 
-app_token = os.getenv("SLACK_APP_TOKEN")
-bot_token = os.getenv("SLACK_BOT_TOKEN")
+app_token = os.getenv("SLACK_APP_TOKEN_TEST")
+bot_token = os.getenv("SLACK_BOT_TOKEN_TEST")
 
 app = App(token=bot_token)
 
 
 # responce to "test" message in text channel
-@app.message(compile("^test$"))
+@app.message(compile("^testApp$"))
 def test_function(body):
     main_event = body["event"]
     # text = main_event["text"]
@@ -55,20 +55,13 @@ def handle_message_events(body):
         message += "*概要*: " + abstract_ja
 
         # get side information
-        year = ""
-        try:
-            year = data_en["year"]
-        except KeyError as e:
-            year = ""
+        year = getattr(data_en, "year", "")
         venue = data_en["venue"]
         cites = data_en["citationCount"]
         authors = ""
         for item in data_en["authors"]:
             authors += item["name"] + ", "
         authors = authors[:-2]
-
-        # get the full-text summary
-        summary = gpt_read.summarize_paper_in_url(url)
 
         # post message
         semantic = app.client.chat_postMessage(
@@ -103,6 +96,8 @@ def handle_message_events(body):
             channel=channel,
         )
 
+        # get the full-text summary
+        summary = gpt_read.summarize_paper_in_url(url)
         app.client.chat_postMessage(
             text=summary,
             channel=channel,
